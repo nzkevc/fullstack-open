@@ -1,5 +1,6 @@
 import Header from './components/Header'
 import Content from './components/Content'
+import Total from './components/Total'
 
 const App = () => {
   const course = 'Half Stack application development'
@@ -16,7 +17,7 @@ const App = () => {
       <Content part={part1} noOfExercises={exercises1} />
       <Content part={part2} noOfExercises={exercises2} />
       <Content part={part3} noOfExercises={exercises3} />
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      <Total total={exercises1 + exercises2 + exercises3} />
     </div>
   )
 }
