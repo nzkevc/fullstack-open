@@ -1,7 +1,7 @@
 const Total = (props) => {
     const partsArray = props.parts
 
-    // surely smarter way to do this using loop thing
+    // TODO: surely smarter way to do this using loop thing
     const total = partsArray[0].exercises + partsArray[1].exercises + partsArray[2].exercises
 
     return (
