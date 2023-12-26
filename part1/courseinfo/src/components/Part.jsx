@@ -1,10 +1,13 @@
 const Part = (props) => {
     const part = props.part
-    const noOfExercises = props.noOfExercises
 
+    /* 
+        this feels like a hack and terrible solution because you'll probably forget the fields of the object
+        once it has gone through two levels of nested components
+    */
     return (
         <div>
-            <p>{part} {noOfExercises}</p>
+            <p>{part.name} {part.exercises}</p>
         </div>
     )
 }
