@@ -31,6 +31,7 @@ const App = () => {
         <StatisticsLine text='bad' number={bad} />
         <StatisticsLine text='all' number={getTotal()} />
         <StatisticsLine text='average' number={(good * 1 + bad * -1) / (getTotal())} />
+        {/* TODO: fix rounding issues? */}
         <PercentageLine text='positive' number={good / getTotal()} />
 
       </div>
