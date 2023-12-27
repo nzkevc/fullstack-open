@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Button from './components/Button'
 
 const App = () => {
   const anecdotes = [
@@ -14,9 +15,20 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
 
+  const getNewRandInt = () => {
+    const newRandInt = Math.floor(Math.random() * anecdotes.length)
+    return (newRandInt !== selected ? newRandInt : getNewRandInt)
+  }
+
+  const displayNextAnecdote = () => {
+    // random number corresponding to anecdote in array
+    setSelected(getNewRandInt())
+  }
+
   return (
     <div>
       {anecdotes[selected]}
+      <Button text='next anecdote' onClick={displayNextAnecdote} />
     </div>
   )
 }
