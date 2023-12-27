@@ -14,21 +14,35 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  // XXX: maybe implement using object for fun?
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
   const getNewRandInt = () => {
     const newRandInt = Math.floor(Math.random() * anecdotes.length)
-    return (newRandInt !== selected ? newRandInt : getNewRandInt)
+    return (newRandInt !== selected ? newRandInt : getNewRandInt())
   }
 
   const displayNextAnecdote = () => {
     // random number corresponding to anecdote in array
-    setSelected(getNewRandInt())
+    const randInt = getNewRandInt()
+    setSelected(randInt)
+  }
+
+  const voteAnecdote = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
   }
 
   return (
     <div>
-      {anecdotes[selected]}
+      {/* <h1>Anecdote of the day</h1> */}
+      <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+      <Button text='vote' onClick={voteAnecdote} />
       <Button text='next anecdote' onClick={displayNextAnecdote} />
+
+      {/* <h1>Anecdote with the most votes</h1> */}
     </div>
   )
 }
