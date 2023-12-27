@@ -10,6 +10,17 @@ const Statistics = ({ statArray }) => {
     return (good + neutral + bad)
   }
 
+  if (getTotal() === 0) {
+    // XXX: uh what happens if you only want to render a CERTAIN PART differently, rather than the whole thing?
+    // more component extraction?
+    return (
+      <div>
+        {/* Not sure if I should do header in both or not */}
+        <Header text='statistics' />
+        <p>no feedback given</p>
+      </div>
+    )
+  }
   return (
     <div>
       <Header text='statistics' />
