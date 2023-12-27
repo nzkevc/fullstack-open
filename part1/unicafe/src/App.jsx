@@ -24,12 +24,11 @@ const App = () => {
         <Content text='good' number={good} />
         <Content text='neutral' number={neutral} />
         <Content text='bad' number={bad} />
-        <Content text='all' number={good} />
+        {/* <Content text='all' number={good + neutral + bad} />
         <Content text='average' number={good} />
-        <Content text='positive' number={good} />
+        <Content text='positive' number={good} /> */}
 
       </div>
-
     </div>
   )
 }
