@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Header from './components/Header'
+import Button from './components/Button'
 
 const App = () => {
   // save clicks of each button to its own state
@@ -10,6 +11,12 @@ const App = () => {
   return (
     <div>
       <Header text='give feedback' />
+      {/* TODO make buttons inline */}
+      <div>
+        <Button name='good' onClick={() => setGood(good + 1)} />
+        <Button name='neutral' onClick={() => setNeutral(neutral + 1)} />
+        <Button name='bad' onClick={() => setBad(bad + 1)} />
+      </div>
 
       <Header text='statistics' />
 
