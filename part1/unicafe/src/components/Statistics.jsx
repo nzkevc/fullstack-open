@@ -25,13 +25,17 @@ const Statistics = ({ statArray }) => {
     <div>
       <Header text='statistics' />
       <div>
-        <StatisticsLine text='good' number={good} />
-        <StatisticsLine text='neutral' number={neutral} />
-        <StatisticsLine text='bad' number={bad} />
-        <StatisticsLine text='all' number={getTotal()} />
-        <StatisticsLine text='average' number={(good * 1 + bad * -1) / (getTotal())} />
-        {/* TODO: fix rounding issues? */}
-        <PercentageLine text='positive' number={good / getTotal()} />
+        <table>
+          <tbody>
+            <StatisticsLine text='good' number={good} />
+            <StatisticsLine text='neutral' number={neutral} />
+            <StatisticsLine text='bad' number={bad} />
+            <StatisticsLine text='all' number={getTotal()} />
+            <StatisticsLine text='average' number={(good * 1 + bad * -1) / (getTotal())} />
+            {/* TODO: fix rounding issues? */}
+            <PercentageLine text='positive' number={good / getTotal()} />
+          </tbody>
+        </table>
       </div>
     </div>
   )
