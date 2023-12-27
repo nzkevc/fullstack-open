@@ -1,4 +1,4 @@
-const Content = ({ text, number }) => {
+const StatisticsLine = ({ text, number }) => {
     return (
         <div>
             <p>{text} {number}</p>
@@ -6,4 +6,4 @@ const Content = ({ text, number }) => {
     )
 }
 
-export default Content
+export default StatisticsLine

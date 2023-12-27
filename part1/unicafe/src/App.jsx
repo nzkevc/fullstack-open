@@ -1,13 +1,18 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import Button from './components/Button'
-import Content from './components/Content'
+import StatisticsLine from './components/StatisticsLine'
+import PercentageLine from './components/PercentageLine'
 
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+
+  const getTotal = () => {
+    return (good + neutral + bad)
+  }
 
   return (
     <div>
@@ -21,12 +26,12 @@ const App = () => {
 
       <Header text='statistics' />
       <div>
-        <Content text='good' number={good} />
-        <Content text='neutral' number={neutral} />
-        <Content text='bad' number={bad} />
-        {/* <Content text='all' number={good + neutral + bad} />
-        <Content text='average' number={good} />
-        <Content text='positive' number={good} /> */}
+        <StatisticsLine text='good' number={good} />
+        <StatisticsLine text='neutral' number={neutral} />
+        <StatisticsLine text='bad' number={bad} />
+        <StatisticsLine text='all' number={getTotal()} />
+        <StatisticsLine text='average' number={(good * 1 + bad * -1) / (getTotal())} />
+        <PercentageLine text='positive' number={good / getTotal()} />
 
       </div>
     </div>
