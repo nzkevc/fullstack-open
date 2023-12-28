@@ -16,6 +16,7 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   // XXX: maybe implement using object for fun?
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
+  const [max, setMax] = useState(0)
 
   const getNewRandInt = () => {
     const newRandInt = Math.floor(Math.random() * anecdotes.length)
@@ -32,17 +33,28 @@ const App = () => {
     const newVotes = [...votes]
     newVotes[selected] += 1
     setVotes(newVotes)
+    updateMaxVoted(newVotes[selected])
+  }
+
+  // not elegant? Not tied to anecdote?
+  const updateMaxVoted = (newVote) => {
+    if (newVote > max) {
+      setMax(newVote)
+    }
   }
 
   return (
     <div>
-      {/* <h1>Anecdote of the day</h1> */}
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <Button text='vote' onClick={voteAnecdote} />
       <Button text='next anecdote' onClick={displayNextAnecdote} />
 
-      {/* <h1>Anecdote with the most votes</h1> */}
+      <h1>Anecdote with the most votes</h1>
+      {/* PROBABLY BETTER WAY TO DO THIS? */}
+      <p>{anecdotes[votes.indexOf(max)]}</p>
+      <p>has {max} votes</p>
     </div>
   )
 }
