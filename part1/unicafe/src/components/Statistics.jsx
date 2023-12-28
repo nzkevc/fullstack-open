@@ -31,9 +31,9 @@ const Statistics = ({ statArray }) => {
             <StatisticsLine text='neutral' number={neutral} />
             <StatisticsLine text='bad' number={bad} />
             <StatisticsLine text='all' number={getTotal()} />
-            <StatisticsLine text='average' number={(good * 1 + bad * -1) / (getTotal())} />
+            <StatisticsLine text='average' number={((good * 1 + bad * -1) / (getTotal())).toFixed(2)} />
             {/* TODO: fix rounding issues? */}
-            <PercentageLine text='positive' number={good / getTotal()} />
+            <PercentageLine text='positive' number={(good / getTotal()).toFixed(4)} />
           </tbody>
         </table>
       </div>

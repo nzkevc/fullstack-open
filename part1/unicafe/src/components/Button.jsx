@@ -1,6 +1,6 @@
 const Button = ({ name, onClick }) => {
   return (
-    <div>
+    <div style={{ display: 'inline-block' }}>
       <button onClick={onClick}>{name}</button>
     </div>
   )

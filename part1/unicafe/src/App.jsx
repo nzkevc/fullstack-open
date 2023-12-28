@@ -12,7 +12,6 @@ const App = () => {
   return (
     <div>
       <Header text='give feedback' />
-      {/* TODO make buttons inline */}
       <div>
         <Button name='good' onClick={() => setGood(good + 1)} />
         <Button name='neutral' onClick={() => setNeutral(neutral + 1)} />
