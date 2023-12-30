@@ -1,11 +1,11 @@
 const Header = (props) => {
-    const course = props.course
+  const course = props.course
 
-    return (
-        <div>
-            <h1>{course}</h1>
-        </div>
-    )
+  return (
+    <div>
+      <h2>{course}</h2>
+    </div>
+  )
 }
 
 export default Header
