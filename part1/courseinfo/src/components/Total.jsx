@@ -1,8 +1,8 @@
-const Total = (props) => {
-  const partsArray = props.parts
+const Total = ({ parts }) => {
 
-  // TODO: surely smarter way to do this using loop thing
-  const total = partsArray[0].exercises + partsArray[1].exercises + partsArray[2].exercises
+  const total = parts.reduce((sum, part) => {
+    return (sum + part.exercises)
+  }, 0)
 
   return (
     <div>
