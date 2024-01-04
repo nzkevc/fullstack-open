@@ -21,9 +21,10 @@ const App = () => {
 
     if (persons.find(person => person.name.toLowerCase() === newName.toLowerCase())) {
       if (confirm((`${newName} is already added to the phonebook, replace the old number with a new one?`))) {
-        handleUpdate()
+        const updatedPerson = { ...persons.find(person => person.name.toLowerCase() === newName.toLowerCase()), number: newPhone }
+        handleUpdate(updatedPerson)
+        return
       }
-
     }
 
     const newPerson = {
@@ -48,8 +49,9 @@ const App = () => {
     }
   }
 
-  const handleUpdate = id => {
-    console.log(id)
+  const handleUpdate = (updatedPerson) => {
+    personService.update(updatedPerson.id, updatedPerson)
+    setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
   }
 
   const handleNameChange = event => setNewName(event.target.value)
