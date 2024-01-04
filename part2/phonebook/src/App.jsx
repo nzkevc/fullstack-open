@@ -9,13 +9,18 @@ const App = () => {
   const addPerson = event => {
     event.preventDefault()
 
+
     const newPerson = {
       name: newName
     }
 
-    console.log(persons.concat(newPerson))
+    if (persons.find(person => person.name === newName)) {
+      alert(`${newName} is already added to the phonebook`)
+      return
+    }
 
     setPersons(persons.concat(newPerson))
+    setNewName('')
   }
 
   const handlePersonChange = event => {
@@ -34,6 +39,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
+      {/* Relies on no duplicate names */}
       {persons.map(person => <li key={person.name}>{person.name}</li>)}
     </div>
   )
