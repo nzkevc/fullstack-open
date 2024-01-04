@@ -39,6 +39,18 @@ const App = () => {
       })
   }
 
+  // TODO: WHY DOESN'T THE COMPONENT RERENDER FOR DELETION???
+  const handleDelete = event => {
+    personService.deleteResource(event.target.value)
+      .then(() => {
+        console.log(event.target.value)
+        console.log(persons);
+        console.log(persons.filter(person => person.id !== event.target.value))
+        setPersons(persons.filter(person => person.id !== event.target.value))
+      })
+  }
+
+
   const handleNameChange = event => setNewName(event.target.value)
   const handlePhoneChange = event => setNewPhone(event.target.value)
   const handleFilterChange = event => setFilter(event.target.value)
@@ -55,7 +67,7 @@ const App = () => {
         handlePhoneChange={handlePhoneChange}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} />
+      <Persons persons={persons} filter={filter} handleDelete={handleDelete} />
     </div>
   )
 }
