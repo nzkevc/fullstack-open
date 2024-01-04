@@ -20,8 +20,10 @@ const App = () => {
     event.preventDefault()
 
     if (persons.find(person => person.name.toLowerCase() === newName.toLowerCase())) {
-      alert(`${newName} is already added to the phonebook`)
-      return
+      if (confirm((`${newName} is already added to the phonebook, replace the old number with a new one?`))) {
+        handleUpdate()
+      }
+
     }
 
     const newPerson = {
@@ -35,21 +37,20 @@ const App = () => {
         // clear input field
         setNewName('')
         setNewPhone('')
-
       })
   }
 
-  // TODO: WHY DOESN'T THE COMPONENT RERENDER FOR DELETION???
+  // STUPID TYPES
   const handleDelete = event => {
-    personService.deleteResource(event.target.value)
-      .then(() => {
-        console.log(event.target.value)
-        console.log(persons);
-        console.log(persons.filter(person => person.id !== event.target.value))
-        setPersons(persons.filter(person => person.id !== event.target.value))
-      })
+    if (confirm(`Delete ${persons.find(person => person.id === Number(event.target.value)).name}?`)) {
+      personService.deleteResource(event.target.value)
+        .then(() => setPersons(persons.filter(person => person.id !== Number(event.target.value))))
+    }
   }
 
+  const handleUpdate = id => {
+    console.log(id)
+  }
 
   const handleNameChange = event => setNewName(event.target.value)
   const handlePhoneChange = event => setNewPhone(event.target.value)
