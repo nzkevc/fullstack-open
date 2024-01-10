@@ -4,12 +4,15 @@ import personService from './services/persons'
 import Persons from './components/Persons'
 import Input from './components/Input'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [filter, setFilter] = useState('')
+  // probably bad that it's an object but ehhhhh
+  const [errorMessage, setErrorMessage] = useState({ type: 'error', message: null })
 
   useEffect(() => {
     personService.getAll()
@@ -38,6 +41,10 @@ const App = () => {
         // clear input field
         setNewName('')
         setNewPhone('')
+        setErrorMessage({ type: 'success', message: `${addedPerson.name} sucessfully added to the server` })
+        setTimeout(() => {
+          setErrorMessage({ type: 'error', message: null })
+        }, 5000)
       })
   }
 
@@ -51,6 +58,14 @@ const App = () => {
 
   const handleUpdate = (updatedPerson) => {
     personService.update(updatedPerson.id, updatedPerson)
+      .catch(error => {
+        console.log(error)
+        setErrorMessage({ type: 'error', message: `Information of ${updatedPerson.name} has already been removed from the server` })
+        setPersons(persons.filter(person => person.id !== updatedPerson.id))
+        setTimeout(() => {
+          setErrorMessage({ type: 'error', message: null })
+        }, 5000)
+      })
     setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
   }
 
@@ -61,6 +76,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification type={errorMessage.type} message={errorMessage.message}></Notification>
       <Input header='filter shown (by name) with' value={filter} onChange={handleFilterChange} />
       <h2>add a new</h2>
       <PersonForm addPerson={addPerson}
