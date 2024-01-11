@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import countryService from './services/countries'
 
 import CountryInput from './components/CountryInput'
-import CountryList from './components/CountryList'
+import CountryItem from './components/CountryItem'
+import CountryData from './components/CountryData'
 
 /*
   CountryInput - find countries <Input> shall include the onChange thing and be bound to a state
@@ -13,21 +14,40 @@ import CountryList from './components/CountryList'
 const App = () => {
   const [search, setSearch] = useState('')
   const [countries, setCountries] = useState([])
+  const [filteredCountryNames, setFilteredCountryNames] = useState([])
+  const [countryNames, setCountryNames] = useState([])
+
 
   useEffect(() => {
-    // TODO: kinda wish I could get only what's needed
+    // TODO: Leaning towards not getting all
     countryService.getAll()
-      .then(allCountries => setCountries(allCountries))
-  })
+      .then(allCountries => {
+        setCountries(allCountries)
+        setCountryNames(allCountries.map(country => country.name.common))
+        setFilteredCountryNames(allCountries.map(country => country.name.common))
+      })
+  }, [])
+
 
   const changeSearch = (event) => {
     setSearch(event.target.value)
+    setFilteredCountryNames(countryNames.filter(country => country.toLowerCase().includes(event.target.value.toLowerCase())))
+  }
+
+  // show country button
+  const handleButtonClick = () => {
+    console.log('Hello WORLD!!!!')
   }
 
   return (
     <div>
       <CountryInput value={search} onChange={changeSearch} />
-      <CountryList countries={countries} search={search} />
+
+      {filteredCountryNames.length === countryNames.length ? '' :
+        filteredCountryNames.length === 1 ? <CountryData /> :
+          filteredCountryNames.length > 10 ? 'Too many matches, specify another filter' :
+            filteredCountryNames.map(country => <CountryItem key={country} country={country} onButtonClick={handleButtonClick} />)
+      }
     </div>
   )
 }

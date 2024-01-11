@@ -1,11 +1,13 @@
-const CountryList = ({ countries, search }) => {
+const CountryList = ({ countryNames, search }) => {
 
-  const filteredCountries = countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
+  const filteredCountries = countryNames.filter(country => country.toLowerCase().includes(search.toLowerCase()))
 
   return (
-    <div>
-      {filteredCountries.map(country => <li key={country.name.common}>{country.name.common}</li>)}
-    </div>
+    (filteredCountries.length === countryNames.length) || filteredCountries.length === 1 ? <div></div> :
+
+      filteredCountries.length > 10 ? <div>Too many matches, specify another filter</div> :
+
+        <div>{filteredCountries.map(country => <li key={country}>{country}</li>)}</div>
   )
 }
 

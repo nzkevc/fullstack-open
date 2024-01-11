@@ -29,12 +29,10 @@ const App = () => {
         return
       }
     }
-
     const newPerson = {
       name: newName,
       number: newPhone
     }
-
     personService.create(newPerson)
       .then(addedPerson => {
         setPersons(persons.concat(addedPerson))
@@ -50,6 +48,7 @@ const App = () => {
 
   // STUPID TYPES
   const handleDelete = event => {
+    // TODO: don't be stupid with event target and button parameters, just put params in your FUNCTIONNNNN
     if (confirm(`Delete ${persons.find(person => person.id === Number(event.target.value)).name}?`)) {
       personService.deleteResource(event.target.value)
         .then(() => setPersons(persons.filter(person => person.id !== Number(event.target.value))))
