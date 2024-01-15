@@ -2,9 +2,9 @@ import axios from "axios";
 
 const baseUrl = 'https://studies.cs.helsinki.fi/restcountries/api'
 
-const getAll = () => {
+const getAllNames = () => {
   const request = axios.get(`${baseUrl}/all`)
-  return request.then(response => response.data)
+  return request.then(response => response.data.map(country => country.name.common))
 }
 
 const getCountry = (country) => {
@@ -12,4 +12,4 @@ const getCountry = (country) => {
   return request.then(response => response.data)
 }
 
-export default { getAll, getCountry }
+export default { getAllNames, getCountry }

@@ -1,8 +1,8 @@
-const CountryItem = ({ country, onButtonClick }) => {
+const CountryItem = ({ countryName, onButtonClick }) => {
 
   return (
     <div>
-      <li>{country} <button onClick={onButtonClick}>show</button></li>
+      <li>{countryName} <button onClick={onButtonClick(countryName)}>show</button></li>
     </div>
   )
 }

@@ -1,10 +1,12 @@
-const CountryData = () => {
+const CountryData = ({ country }) => {
 
-  return (
-    <div>
-      hello world!!!!!
-    </div>
-  )
+  if (country) {
+    return (
+      <div>
+        {country.name.official}
+      </div>
+    )
+  }
 }
 
 export default CountryData
