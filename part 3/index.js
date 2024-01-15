@@ -1,8 +1,15 @@
 const express = require('express')
+const morgan = require('morgan')
 
 const app = express()
 
+morgan.token('json-post', (request) => {
+  return JSON.stringify(request.body)
+})
+const logger = morgan(':method :url :status :res[content-length] - :response-time ms :json-post')
+
 app.use(express.json())
+app.use(logger)
 
 let people = [
   {
@@ -28,7 +35,7 @@ let people = [
 ]
 
 const generateId = () => {
-  return Math.random() * 10000
+  return Math.round(Math.random() * 10000)
 }
 
 app.get('/api/persons', (request, response) => {
@@ -57,7 +64,7 @@ app.post('/api/persons', (request, response) => {
   const body = request.body
 
   if (!body.name || !body.number) {
-    response.status(400).json({
+    return response.status(400).json({
       error: `${!body.name && !body.number ? 'body and number' :
         !body.name ? 'body' :
           !body.number ? 'number' : ''} missing`
@@ -65,7 +72,7 @@ app.post('/api/persons', (request, response) => {
   }
 
   if (people.map(entry => entry.name.toLowerCase()).includes(body.name.toLowerCase())) {
-    response.status(400).json({
+    return response.status(400).json({
       error: 'name already exists'
     })
   }
