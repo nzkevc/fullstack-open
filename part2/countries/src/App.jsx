@@ -6,18 +6,12 @@ import CountryItem from './components/CountryItem'
 import CountryData from './components/CountryData'
 import CountryResultPlaceholder from './components/CountryResultPlaceholder'
 
-/*
-  CountryInput - find countries <Input> shall include the onChange thing and be bound to a state
-  CountryList component - needs a way to disappear when only one country
-  CountryData component - Shall list all the country data given the thing 
-*/
 
 const App = () => {
   const [search, setSearch] = useState('')
   const [countryNames, setCountryNames] = useState([])
   const [filteredCountryNames, setFilteredCountryNames] = useState([])
   const [currentCountry, setCurrentCountry] = useState(null)
-
 
   useEffect(() => {
     countryService.getAllNames()
@@ -33,7 +27,7 @@ const App = () => {
     const currentFilter = countryNames.filter(country => country.toLowerCase().includes(event.target.value.toLowerCase()))
     setFilteredCountryNames(currentFilter)
 
-    if (currentFilter.length > 1) {
+    if (currentFilter.length > 1 || currentFilter.length === 0) {
       setCurrentCountry(null)
     } else if (currentFilter.length === 1) {
       if (currentCountry) {
