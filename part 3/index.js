@@ -29,6 +29,11 @@ app.get('/', (request, response) => {
   response.json(data)
 })
 
+app.get('/:id', (request, response) => {
+  const id = Number(request.params.id)
+  response.json(data.find(entry => entry.id === id))
+})
+
 app.get('/info', (request, response) => {
   response.send(`<p>Phonebook has info for ${data.length} people</p>
                  <p>${new Date()}</p>`)
