@@ -56,9 +56,17 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  if (!body.name) {
+  if (!body.name || !body.number) {
     response.status(400).json({
-      error: 'name missing'
+      error: `${!body.name && !body.number ? 'body and number' :
+        !body.name ? 'body' :
+          !body.number ? 'number' : ''} missing`
+    })
+  }
+
+  if (people.map(entry => entry.name.toLowerCase()).includes(body.name.toLowerCase())) {
+    response.status(400).json({
+      error: 'name already exists'
     })
   }
 
