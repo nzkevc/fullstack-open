@@ -17,7 +17,15 @@ const personSchema = new mongoose.Schema({
   number: String,
 })
 
-const Person = mongoose.model('Person', personSchema)
+personSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
+export const Person = mongoose.model('Person', personSchema)
 
 if (process.argv[3] && process.argv[4]) {
   const name = process.argv[3]
