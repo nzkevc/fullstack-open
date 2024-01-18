@@ -9,8 +9,8 @@ morgan.token('json-post', (request) => {
 })
 
 app.use(express.json())
+app.use(express.static('dist'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json-post'))
-app.use(cors())
 
 let people = [
   {
