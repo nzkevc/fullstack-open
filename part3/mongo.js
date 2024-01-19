@@ -25,7 +25,7 @@ personSchema.set('toJSON', {
   }
 })
 
-export const Person = mongoose.model('Person', personSchema)
+const Person = mongoose.model('Person', personSchema)
 
 if (process.argv[3] && process.argv[4]) {
   const name = process.argv[3]
@@ -33,7 +33,7 @@ if (process.argv[3] && process.argv[4]) {
   const newPerson = new Person({ name, number })
   console.log(newPerson)
 
-  newPerson.save().then(result => {
+  newPerson.save().then(() => {
     console.log('person saved!')
     mongoose.connection.close()
   })

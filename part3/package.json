@@ -7,6 +7,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "debug": "nodemon --inspect index.js",
+    "lint": "eslint .",
+    "lint:f": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf dist && cd ../part2/phonebook && npm run build && cp -r dist ../../part3",
     "deploy": "fly deploy",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.0",
+    "eslint": "^8.56.0",
     "nodemon": "^3.0.2"
   }
 }

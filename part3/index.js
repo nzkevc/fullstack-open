@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const Person = require('./models/person')
-const { Query } = require('mongoose')
 
 const app = express()
 
@@ -34,7 +33,7 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -96,7 +95,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 // TODO: should handle wrong ids for put AND get, name already existing?, deletion error?
-const errorHandler = (error, request, response, next) => {
+const errorHandler = (error, request, response) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
