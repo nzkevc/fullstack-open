@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const Person = require('./models/person')
+const { Query } = require('mongoose')
 
 const app = express()
 
@@ -43,14 +44,6 @@ app.delete('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: `${!body.name && !body.number ? 'body and number' :
-        !body.name ? 'body' :
-          !body.number ? 'number' : ''} missing`
-    })
-  }
-
   // if (people.map(entry => entry.name.toLowerCase()).includes(body.name.toLowerCase())) {
   //   return response.status(400).json({
   //     error: 'name already exists'
@@ -67,15 +60,17 @@ app.post('/api/persons', (request, response) => {
   })
 })
 
-app.put('api/persons/:id', (request, response, next) => {
+app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
 
-  const person = new Person({
+  const update = {
     name: body.name,
     number: body.number,
-  })
+  }
 
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  console.log('updated person created: ', update)
+
+  Person.findByIdAndUpdate(request.params.id, update, { new: true, runValidators: true })
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
@@ -93,16 +88,18 @@ app.get('/info', (request, response) => {
 })
 
 const unknownEndpoint = (request, response) => {
+  console.log(request.body)
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
 app.use(unknownEndpoint)
 
 // TODO: should handle wrong ids for put AND get, name already existing?, deletion error?
-// CastError - malformatted id
 const errorHandler = (error, request, response, next) => {
-  if (error === 'CastError') {
-    response.status(400).send({ error: 'malformatted id' })
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
   }
 }
 
