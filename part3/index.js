@@ -41,7 +41,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 // TODO: extract error handling question mark?
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
   // if (people.map(entry => entry.name.toLowerCase()).includes(body.name.toLowerCase())) {
@@ -55,11 +55,14 @@ app.post('/api/persons', (request, response) => {
     number: body.number
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
+    .catch(error => next(error))
 })
 
+// TODO: doesn't catch when person doesn't exist
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
 
@@ -67,8 +70,6 @@ app.put('/api/persons/:id', (request, response, next) => {
     name: body.name,
     number: body.number,
   }
-
-  console.log('updated person created: ', update)
 
   Person.findByIdAndUpdate(request.params.id, update, { new: true, runValidators: true })
     .then(updatedPerson => {
@@ -96,9 +97,13 @@ app.use(unknownEndpoint)
 
 // TODO: should handle wrong ids for put AND get, name already existing?, deletion error?
 const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  } else {
     return response.status(400).json({ error: error.message })
   }
 }

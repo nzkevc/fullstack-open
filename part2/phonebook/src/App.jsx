@@ -44,28 +44,40 @@ const App = () => {
           setErrorMessage({ type: 'error', message: null })
         }, 5000)
       })
+      .catch(error => {
+        setErrorMessage({ type: 'error', message: error.response.data.error })
+        setTimeout(() => {
+          setErrorMessage({ type: 'error', message: null })
+        }, 5000)
+      })
   }
 
   // STUPID TYPES
   const handleDelete = event => {
     // TODO: don't be stupid with event target and button parameters, just put params in your FUNCTIONNNNN
-    if (confirm(`Delete ${persons.find(person => person.id === Number(event.target.value)).name}?`)) {
+    if (confirm(`Delete ${persons.find(person => person.id === event.target.value).name}?`)) {
       personService.deleteResource(event.target.value)
-        .then(() => setPersons(persons.filter(person => person.id !== Number(event.target.value))))
+        .then(() => setPersons(persons.filter(person => person.id !== event.target.value)))
     }
   }
 
+  // TODO: doesn't catch when person is deleted from the server
   const handleUpdate = (updatedPerson) => {
     personService.update(updatedPerson.id, updatedPerson)
+      .then(() => {
+        setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
+      })
       .catch(error => {
-        console.log(error)
-        setErrorMessage({ type: 'error', message: `Information of ${updatedPerson.name} has already been removed from the server` })
-        setPersons(persons.filter(person => person.id !== updatedPerson.id))
+        setErrorMessage({ type: 'error', message: error.response.data.error })
+        // OR
+        // if (ALREADY REMOVED FROM SERVER) {
+        //   setErrorMessage({ type: 'error', message: `Information of ${updatedPerson.name} has already been removed from the server` })
+        //   setPersons(persons.filter(person => person.id !== updatedPerson.id))
+        // }
         setTimeout(() => {
           setErrorMessage({ type: 'error', message: null })
         }, 5000)
       })
-    setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
   }
 
   const handleNameChange = event => setNewName(event.target.value)
