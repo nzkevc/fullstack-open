@@ -1,3 +1,3 @@
 # Full Stack open course exercises
 
-For NZPMC internship thingy
+For NZPMC internship
