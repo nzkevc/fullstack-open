@@ -1,9 +1,7 @@
 ---
 name: Issue Template
-about: For new issues
+description: For new issues
 title: "[Feature] Title"
-labels: ""
-assignees: ""
 ---
 
 ## User story
