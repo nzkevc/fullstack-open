@@ -1,6 +1,6 @@
 ---
 name: Issue Template
-description: For new issues
+about: For new issues
 title: "[Feature] Title"
 ---
 
